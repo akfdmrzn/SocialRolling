@@ -32,6 +32,7 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var view0100Timer: UIView!
     @IBOutlet weak var view100200Timer: UIView!
+    @IBOutlet weak var viewSpeed: UIView!
     
     var minutes = 0
     var seconds = 0
@@ -60,6 +61,7 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     func setUI(){
         self.view0100Timer.addShadow()
         self.view100200Timer.addShadow()
+        self.viewSpeed.addShadow()
     }
     
     override func viewDidLayoutSubviews() {
@@ -69,17 +71,11 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     @objc func timerIsRunning() {
         
         showTimer()
-        
-        
         milliseconds += 1
-        
         if milliseconds > 100 {
-            
             milliseconds = 0
             seconds += 1
         }
-        
-        
         
     }
     
@@ -146,7 +142,7 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         if switchSpeed == "KPH" {
             // Checking if speed is less than zero
             if (speedToKPH > 0) {
-                speedDisplay.text = (String(format: "Speed : %.0f km/h", speedToKPH))
+                speedDisplay.text = (String(format: "%.0f", speedToKPH))
                 arrayKPH.append(speedToKPH)
                 let lowSpeed = arrayKPH.min()
                 let highSpeed = arrayKPH.max()
@@ -159,7 +155,7 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
                 }
                 //                print("Low: \(lowSpeed!) - High: \(highSpeed!)")
             } else {
-                speedDisplay.text = "Speed : 0 km/h"
+                speedDisplay.text = "0"
             }
         }
         

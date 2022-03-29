@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "stopwatch.png",
+      "filename" : "time@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "stopwatch@2x.png",
+      "filename" : "time@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
