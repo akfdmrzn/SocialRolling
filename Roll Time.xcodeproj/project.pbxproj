@@ -3,18 +3,36 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55E010BCFA796DE13BB976DD /* Pods_Roll_Time.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C03253C6DBB740C72A70CDB /* Pods_Roll_Time.framework */; };
+		BF04658A27F06744003A8847 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF04658927F06744003A8847 /* GoogleService-Info.plist */; };
+		BF12953A27DD051F00B1C255 /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF12953927DD051F00B1C255 /* RouteViewController.swift */; };
+		BF12954027DD05F500B1C255 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF12953F27DD05F500B1C255 /* Constants.swift */; };
+		BF12954227DD158500B1C255 /* speedmeter.json in Resources */ = {isa = PBXBuildFile; fileRef = BF12954127DD158500B1C255 /* speedmeter.json */; };
+		BF12955427DD6D9700B1C255 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF12955227DD6D9700B1C255 /* RegisterViewController.swift */; };
+		BF12955527DD6D9700B1C255 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF12955327DD6D9700B1C255 /* RegisterViewController.xib */; };
+		BF238BD127DE241D00134184 /* DBConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF238BD027DE241D00134184 /* DBConnection.swift */; };
+		BF238BD327DE2FD500134184 /* BrandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF238BD227DE2FD500134184 /* BrandModel.swift */; };
+		BF238BD527DE304D00134184 /* CarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF238BD427DE304D00134184 /* CarModel.swift */; };
+		BF238BD727DE3BD400134184 /* ExtensionUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF238BD627DE3BD400134184 /* ExtensionUIButton.swift */; };
+		BF238BDA27DE3CD700134184 /* ImageViewPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF238BD927DE3CD700134184 /* ImageViewPicker.swift */; };
+		BF238BDC27DE3F0100134184 /* BaseUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF238BDB27DE3F0100134184 /* BaseUIViewController.swift */; };
+		BF2B087F27F30B7800053B3C /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2B087E27F30B7800053B3C /* ExtensionString.swift */; };
+		BF2B088127F3533900053B3C /* ExtensionUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2B088027F3533900053B3C /* ExtensionUIView.swift */; };
 		BF648FD425A2482D00A507F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF648FD325A2482D00A507F4 /* AppDelegate.swift */; };
-		BF648FD625A2482D00A507F4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF648FD525A2482D00A507F4 /* SceneDelegate.swift */; };
-		BF648FD825A2482D00A507F4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF648FD725A2482D00A507F4 /* ViewController.swift */; };
+		BF648FD825A2482D00A507F4 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF648FD725A2482D00A507F4 /* MainViewController.swift */; };
 		BF648FDB25A2482D00A507F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF648FD925A2482D00A507F4 /* Main.storyboard */; };
 		BF648FDD25A2482E00A507F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF648FDC25A2482E00A507F4 /* Assets.xcassets */; };
 		BF648FE025A2482E00A507F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF648FDE25A2482E00A507F4 /* LaunchScreen.storyboard */; };
 		BF648FEB25A2482F00A507F4 /* Roll_TimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF648FEA25A2482F00A507F4 /* Roll_TimeTests.swift */; };
 		BF648FF625A2482F00A507F4 /* Roll_TimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF648FF525A2482F00A507F4 /* Roll_TimeUITests.swift */; };
+		BF94B88027EF889C007E8618 /* carBrandList.db in Resources */ = {isa = PBXBuildFile; fileRef = BF94B87F27EF889C007E8618 /* carBrandList.db */; };
+		BF94B88227EF93D5007E8618 /* ExtensionTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94B88127EF93D5007E8618 /* ExtensionTextField.swift */; };
+		BF94B88527EFCBC8007E8618 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94B88427EFCBC8007E8618 /* FirebaseManager.swift */; };
+		BF94B88727EFCFB1007E8618 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94B88627EFCFB1007E8618 /* RegisterModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +53,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C03253C6DBB740C72A70CDB /* Pods_Roll_Time.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Roll_Time.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		67EF9A43B473DE039B0C1340 /* Pods-Roll Time.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Roll Time.debug.xcconfig"; path = "Target Support Files/Pods-Roll Time/Pods-Roll Time.debug.xcconfig"; sourceTree = "<group>"; };
+		9E4D2AFBB97E6D1E9FEB8CF6 /* Pods-Roll Time.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Roll Time.release.xcconfig"; path = "Target Support Files/Pods-Roll Time/Pods-Roll Time.release.xcconfig"; sourceTree = "<group>"; };
+		BF04658927F06744003A8847 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BF12953927DD051F00B1C255 /* RouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteViewController.swift; sourceTree = "<group>"; };
+		BF12953F27DD05F500B1C255 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		BF12954127DD158500B1C255 /* speedmeter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = speedmeter.json; sourceTree = "<group>"; };
+		BF12955227DD6D9700B1C255 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		BF12955327DD6D9700B1C255 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		BF238BD027DE241D00134184 /* DBConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBConnection.swift; sourceTree = "<group>"; };
+		BF238BD227DE2FD500134184 /* BrandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandModel.swift; sourceTree = "<group>"; };
+		BF238BD427DE304D00134184 /* CarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarModel.swift; sourceTree = "<group>"; };
+		BF238BD627DE3BD400134184 /* ExtensionUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIButton.swift; sourceTree = "<group>"; };
+		BF238BD927DE3CD700134184 /* ImageViewPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewPicker.swift; sourceTree = "<group>"; };
+		BF238BDB27DE3F0100134184 /* BaseUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIViewController.swift; sourceTree = "<group>"; };
+		BF2B087E27F30B7800053B3C /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
+		BF2B088027F3533900053B3C /* ExtensionUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIView.swift; sourceTree = "<group>"; };
 		BF648FD025A2482D00A507F4 /* Roll Time.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Roll Time.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF648FD325A2482D00A507F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BF648FD525A2482D00A507F4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BF648FD725A2482D00A507F4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BF648FD725A2482D00A507F4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		BF648FDA25A2482D00A507F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BF648FDC25A2482E00A507F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF648FDF25A2482E00A507F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +83,10 @@
 		BF648FF125A2482F00A507F4 /* Roll TimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Roll TimeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF648FF525A2482F00A507F4 /* Roll_TimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roll_TimeUITests.swift; sourceTree = "<group>"; };
 		BF648FF725A2482F00A507F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF94B87F27EF889C007E8618 /* carBrandList.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = carBrandList.db; sourceTree = "<group>"; };
+		BF94B88127EF93D5007E8618 /* ExtensionTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTextField.swift; sourceTree = "<group>"; };
+		BF94B88427EFCBC8007E8618 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		BF94B88627EFCFB1007E8618 /* RegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55E010BCFA796DE13BB976DD /* Pods_Roll_Time.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +115,73 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13B13E301259FD46F6E8CBC7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				67EF9A43B473DE039B0C1340 /* Pods-Roll Time.debug.xcconfig */,
+				9E4D2AFBB97E6D1E9FEB8CF6 /* Pods-Roll Time.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		47604D0AC2987CCF105E0044 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2C03253C6DBB740C72A70CDB /* Pods_Roll_Time.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF12953B27DD059E00B1C255 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BF648FD725A2482D00A507F4 /* MainViewController.swift */,
+				BF12953927DD051F00B1C255 /* RouteViewController.swift */,
+				BF12955227DD6D9700B1C255 /* RegisterViewController.swift */,
+				BF12955327DD6D9700B1C255 /* RegisterViewController.xib */,
+				BF238BDB27DE3F0100134184 /* BaseUIViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BF12953C27DD05A300B1C255 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BF238BD227DE2FD500134184 /* BrandModel.swift */,
+				BF238BD427DE304D00134184 /* CarModel.swift */,
+				BF94B88627EFCFB1007E8618 /* RegisterModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BF12953D27DD05A800B1C255 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BF12953E27DD05E400B1C255 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				BF238BD927DE3CD700134184 /* ImageViewPicker.swift */,
+				BF12953F27DD05F500B1C255 /* Constants.swift */,
+				BF238BD027DE241D00134184 /* DBConnection.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		BF238BD827DE3C2F00134184 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				BF238BD627DE3BD400134184 /* ExtensionUIButton.swift */,
+				BF94B88127EF93D5007E8618 /* ExtensionTextField.swift */,
+				BF2B087E27F30B7800053B3C /* ExtensionString.swift */,
+				BF2B088027F3533900053B3C /* ExtensionUIView.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		BF648FC725A2482C00A507F4 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +189,8 @@
 				BF648FE925A2482F00A507F4 /* Roll TimeTests */,
 				BF648FF425A2482F00A507F4 /* Roll TimeUITests */,
 				BF648FD125A2482D00A507F4 /* Products */,
+				47604D0AC2987CCF105E0044 /* Frameworks */,
+				13B13E301259FD46F6E8CBC7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,9 +207,16 @@
 		BF648FD225A2482D00A507F4 /* Roll Time */ = {
 			isa = PBXGroup;
 			children = (
+				BF04658927F06744003A8847 /* GoogleService-Info.plist */,
+				BF94B88327EFCBB4007E8618 /* Firebase */,
+				BF94B87F27EF889C007E8618 /* carBrandList.db */,
+				BF238BD827DE3C2F00134184 /* Extension */,
+				BF12954127DD158500B1C255 /* speedmeter.json */,
+				BF12953E27DD05E400B1C255 /* Util */,
+				BF12953D27DD05A800B1C255 /* View */,
+				BF12953C27DD05A300B1C255 /* Model */,
+				BF12953B27DD059E00B1C255 /* Controller */,
 				BF648FD325A2482D00A507F4 /* AppDelegate.swift */,
-				BF648FD525A2482D00A507F4 /* SceneDelegate.swift */,
-				BF648FD725A2482D00A507F4 /* ViewController.swift */,
 				BF648FD925A2482D00A507F4 /* Main.storyboard */,
 				BF648FDC25A2482E00A507F4 /* Assets.xcassets */,
 				BF648FDE25A2482E00A507F4 /* LaunchScreen.storyboard */,
@@ -128,6 +243,14 @@
 			path = "Roll TimeUITests";
 			sourceTree = "<group>";
 		};
+		BF94B88327EFCBB4007E8618 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				BF94B88427EFCBC8007E8618 /* FirebaseManager.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +258,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BF648FFA25A2482F00A507F4 /* Build configuration list for PBXNativeTarget "Roll Time" */;
 			buildPhases = (
+				F2F617CD43BF83A32665262E /* [CP] Check Pods Manifest.lock */,
 				BF648FCC25A2482D00A507F4 /* Sources */,
 				BF648FCD25A2482D00A507F4 /* Frameworks */,
 				BF648FCE25A2482D00A507F4 /* Resources */,
+				3BC938D29F0D315C930623A9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -231,9 +356,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF94B88027EF889C007E8618 /* carBrandList.db in Resources */,
+				BF12954227DD158500B1C255 /* speedmeter.json in Resources */,
+				BF12955527DD6D9700B1C255 /* RegisterViewController.xib in Resources */,
 				BF648FE025A2482E00A507F4 /* LaunchScreen.storyboard in Resources */,
 				BF648FDD25A2482E00A507F4 /* Assets.xcassets in Resources */,
 				BF648FDB25A2482D00A507F4 /* Main.storyboard in Resources */,
+				BF04658A27F06744003A8847 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,14 +382,69 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3BC938D29F0D315C930623A9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Roll Time/Pods-Roll Time-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Roll Time/Pods-Roll Time-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Roll Time/Pods-Roll Time-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F2F617CD43BF83A32665262E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Roll Time-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BF648FCC25A2482D00A507F4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF648FD825A2482D00A507F4 /* ViewController.swift in Sources */,
+				BF94B88527EFCBC8007E8618 /* FirebaseManager.swift in Sources */,
+				BF238BD527DE304D00134184 /* CarModel.swift in Sources */,
+				BF94B88227EF93D5007E8618 /* ExtensionTextField.swift in Sources */,
+				BF648FD825A2482D00A507F4 /* MainViewController.swift in Sources */,
+				BF12955427DD6D9700B1C255 /* RegisterViewController.swift in Sources */,
+				BF2B087F27F30B7800053B3C /* ExtensionString.swift in Sources */,
+				BF2B088127F3533900053B3C /* ExtensionUIView.swift in Sources */,
+				BF238BDC27DE3F0100134184 /* BaseUIViewController.swift in Sources */,
 				BF648FD425A2482D00A507F4 /* AppDelegate.swift in Sources */,
-				BF648FD625A2482D00A507F4 /* SceneDelegate.swift in Sources */,
+				BF238BD127DE241D00134184 /* DBConnection.swift in Sources */,
+				BF94B88727EFCFB1007E8618 /* RegisterModel.swift in Sources */,
+				BF238BD727DE3BD400134184 /* ExtensionUIButton.swift in Sources */,
+				BF238BDA27DE3CD700134184 /* ImageViewPicker.swift in Sources */,
+				BF12953A27DD051F00B1C255 /* RouteViewController.swift in Sources */,
+				BF12954027DD05F500B1C255 /* Constants.swift in Sources */,
+				BF238BD327DE2FD500134184 /* BrandModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,7 +550,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -421,7 +605,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -433,17 +617,19 @@
 		};
 		BF648FFB25A2482F00A507F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 67EF9A43B473DE039B0C1340 /* Pods-Roll Time.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M7JA36V72Y;
 				INFOPLIST_FILE = "Roll Time/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.akif.dmrzn.rollTime.Roll-Time";
+				PRODUCT_BUNDLE_IDENTIFIER = com.akif.dmrzn.rollTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -452,17 +638,19 @@
 		};
 		BF648FFC25A2482F00A507F4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E4D2AFBB97E6D1E9FEB8CF6 /* Pods-Roll Time.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M7JA36V72Y;
 				INFOPLIST_FILE = "Roll Time/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.akif.dmrzn.rollTime.Roll-Time";
+				PRODUCT_BUNDLE_IDENTIFIER = com.akif.dmrzn.rollTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

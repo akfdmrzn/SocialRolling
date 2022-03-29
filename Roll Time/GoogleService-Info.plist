@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>47191402615-g2ou9bnq2uhk6j3tfc8pqa7h1rj43p94.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.47191402615-g2ou9bnq2uhk6j3tfc8pqa7h1rj43p94</string>
+	<key>API_KEY</key>
+	<string>AIzaSyArf_lXe0VPk4MsR96Z831IoCRBOA4nfFw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>47191402615</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.akif.dmrzn.rollTime</string>
+	<key>PROJECT_ID</key>
+	<string>social-rolling</string>
+	<key>STORAGE_BUCKET</key>
+	<string>social-rolling.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:47191402615:ios:23383b95dc44dd261fbe72</string>
+</dict>
+</plist>
