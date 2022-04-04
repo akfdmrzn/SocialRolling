@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "groupblack@1x.png",
+      "filename" : "peopleblack@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "groupblack@2x.png",
+      "filename" : "peopleblack@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

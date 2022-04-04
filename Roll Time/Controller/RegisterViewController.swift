@@ -73,9 +73,17 @@ class RegisterViewController: BaseUIViewController {
     }
     
     @IBAction func btnActRegister(_ sender: Any) {
-        let registerModel = RegisterModel.init(username: self.textFieldUsername.text ?? "", password: self.textFieldPassword.text ?? "", passwordAgain: self.textFieldAgainPassword.text ?? "", carBrand: self.textFieldCarBrand.text ?? "", carModel: self.textFieldCarModel.text ?? "",carImage: (self.imageViewCar.image ?? UIImage.init(named: "electric-car"))!)
+        let registerModel = RegisterModel.init(username: self.textFieldUsername.text?.lowercased() ?? "", password: self.textFieldPassword.text ?? "", passwordAgain: self.textFieldAgainPassword.text ?? "", carBrand: self.textFieldCarBrand.text ?? "", carModel: self.textFieldCarModel.text ?? "",carImage: (self.imageViewCar.image ?? UIImage.init(named: "electric-car"))!)
         FirebaseManager.shared.registerUser(model: registerModel) { documentId in
-            
+            if !documentId.isEmpty {
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let tabbarVC = storyBoard.instantiateViewController(withIdentifier: "CustomTabViewController")
+                    self.navigationController?.present(tabbarVC, animated: true, completion: {
+                        Defaults().saveUserName(data: self.textFieldUsername.text ?? "")
+                    })
+                }
+            }
         }
     }
     

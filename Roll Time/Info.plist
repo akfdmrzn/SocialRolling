@@ -17,25 +17,25 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to the camera.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>izinverr</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>izin ver</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>izin ver</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to the photo library.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-    <key>NSCameraUsageDescription</key>
-    <string>This app requires access to the camera.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>This app requires access to the photo library.</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>izinverr</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>izin ver</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>izin ver</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

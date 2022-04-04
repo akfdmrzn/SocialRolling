@@ -33,6 +33,7 @@
 		BF94B88227EF93D5007E8618 /* ExtensionTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94B88127EF93D5007E8618 /* ExtensionTextField.swift */; };
 		BF94B88527EFCBC8007E8618 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94B88427EFCBC8007E8618 /* FirebaseManager.swift */; };
 		BF94B88727EFCFB1007E8618 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94B88627EFCFB1007E8618 /* RegisterModel.swift */; };
+		BFF326AF27FA44D90011659B /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF326AE27FA44D90011659B /* Defaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		BF238BDB27DE3F0100134184 /* BaseUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIViewController.swift; sourceTree = "<group>"; };
 		BF2B087E27F30B7800053B3C /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
 		BF2B088027F3533900053B3C /* ExtensionUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIView.swift; sourceTree = "<group>"; };
+		BF2B088627F3ADBE00053B3C /* Roll Time.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Roll Time.entitlements"; sourceTree = "<group>"; };
 		BF648FD025A2482D00A507F4 /* Roll Time.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Roll Time.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF648FD325A2482D00A507F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF648FD725A2482D00A507F4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 		BF94B88127EF93D5007E8618 /* ExtensionTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTextField.swift; sourceTree = "<group>"; };
 		BF94B88427EFCBC8007E8618 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		BF94B88627EFCFB1007E8618 /* RegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
+		BFF326AE27FA44D90011659B /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +170,7 @@
 				BF238BD927DE3CD700134184 /* ImageViewPicker.swift */,
 				BF12953F27DD05F500B1C255 /* Constants.swift */,
 				BF238BD027DE241D00134184 /* DBConnection.swift */,
+				BFF326AE27FA44D90011659B /* Defaults.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -207,6 +211,7 @@
 		BF648FD225A2482D00A507F4 /* Roll Time */ = {
 			isa = PBXGroup;
 			children = (
+				BF2B088627F3ADBE00053B3C /* Roll Time.entitlements */,
 				BF04658927F06744003A8847 /* GoogleService-Info.plist */,
 				BF94B88327EFCBB4007E8618 /* Firebase */,
 				BF94B87F27EF889C007E8618 /* carBrandList.db */,
@@ -440,6 +445,7 @@
 				BF648FD425A2482D00A507F4 /* AppDelegate.swift in Sources */,
 				BF238BD127DE241D00134184 /* DBConnection.swift in Sources */,
 				BF94B88727EFCFB1007E8618 /* RegisterModel.swift in Sources */,
+				BFF326AF27FA44D90011659B /* Defaults.swift in Sources */,
 				BF238BD727DE3BD400134184 /* ExtensionUIButton.swift in Sources */,
 				BF238BDA27DE3CD700134184 /* ImageViewPicker.swift in Sources */,
 				BF12953A27DD051F00B1C255 /* RouteViewController.swift in Sources */,
@@ -621,7 +627,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Roll Time/Roll Time.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = M7JA36V72Y;
 				INFOPLIST_FILE = "Roll Time/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -642,7 +650,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Roll Time/Roll Time.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = M7JA36V72Y;
 				INFOPLIST_FILE = "Roll Time/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

@@ -29,7 +29,7 @@ class RouteViewController: BaseUIViewController {
         
         self.textFieldUsername.setUIConfigure()
         self.textFieldPassword.setUIConfigure()
-        self.textFieldUsername.text = "Akif"
+        self.textFieldUsername.text = "akif"
         self.textFieldPassword.text = "123"
     }
     @IBAction func btnActRegister(_ sender: Any) {
@@ -43,7 +43,7 @@ class RouteViewController: BaseUIViewController {
                     let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let tabbarVC = storyBoard.instantiateViewController(withIdentifier: "CustomTabViewController")
                     self.navigationController?.present(tabbarVC, animated: true, completion: {
-                        
+                        Defaults().saveUserName(data: self.textFieldUsername.text ?? "")
                     })
                 }
             }

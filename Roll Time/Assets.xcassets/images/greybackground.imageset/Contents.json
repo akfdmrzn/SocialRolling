@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "speedometer.png",
+      "filename" : "greybackground.jpeg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "speedometer@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

@@ -18,9 +18,12 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     var traveledDistance:Double = 0
     var arrayMPH: [Double]! = []
     var arrayKPH: [Double]! = []
-    var timer = Timer()
+    var timer0100 = Timer()
+    var timer100200 = Timer()
     
-    
+    @IBOutlet weak var viewTopSpeed: UIView!
+    @IBOutlet weak var viewScores0100: UIView!
+    @IBOutlet weak var viewScores100200: UIView!
     //MARK: IBoutlets
     @IBOutlet weak var speedDisplay: UILabel!
     @IBOutlet weak var headingDisplay: UILabel!
@@ -28,15 +31,23 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var minSpeedLabel: UILabel!
     @IBOutlet weak var maxSpeedLabel: UILabel!
     @IBOutlet weak var avgSpeedLabel: UILabel!
-    @IBOutlet weak var labelTimer: UILabel!
-    
+    @IBOutlet weak var labelTimer0100: UILabel!
+    @IBOutlet weak var labelTimer100200: UILabel!
     @IBOutlet weak var view0100Timer: UIView!
     @IBOutlet weak var view100200Timer: UIView!
     @IBOutlet weak var viewSpeed: UIView!
     
-    var minutes = 0
-    var seconds = 0
-    var milliseconds = 0
+    var minutes0100 = 0
+    var seconds0100 = 0
+    var milliseconds0100 = 0
+    
+    var minutes100200 = 0
+    var seconds100200 = 0
+    var milliseconds100200 = 0
+    
+    var isClicled0100 = false
+    var isClicled100200 = false
+    
     
     //MARK: Life Cycle
     override func viewDidLoad() {
@@ -44,8 +55,7 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         minSpeedLabel.text = "Minimum Speed : 0"
         maxSpeedLabel.text = "Maximum Speed : 0"
         // Ask for Authorisation from the User.
-        self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(timerIsRunning), userInfo: nil, repeats: true)
-        self.timer.invalidate()
+        
         self.locationManager.requestAlwaysAuthorization()
         
         // For use in foreground
@@ -62,27 +72,92 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         self.view0100Timer.addShadow()
         self.view100200Timer.addShadow()
         self.viewSpeed.addShadow()
+        self.viewScores0100.addShadow()
+        self.viewScores100200.addShadow()
+        self.viewTopSpeed.addShadow()
+    }
+    
+    @IBAction func btn0100(_ sender: Any) {
+        if self.isClicled0100 {
+            self.stopTimer0100()
+        }
+        else{
+            self.startTimer0100()
+        }
+        self.isClicled0100 = !self.isClicled0100
+    }
+    
+    @IBAction func btn100200(_ sender: Any) {
+        if self.isClicled100200 {
+            self.stopTimer100200()
+        }
+        else{
+            self.startTimer100200()
+        }
+        self.isClicled100200 = !self.isClicled100200
     }
     
     override func viewDidLayoutSubviews() {
         
     }
     
-    @objc func timerIsRunning() {
+    @objc func timerIsRunning0100() {
         
-        showTimer()
-        milliseconds += 1
-        if milliseconds > 100 {
-            milliseconds = 0
-            seconds += 1
+        showTimer0100()
+        milliseconds0100 += 1
+        if milliseconds0100 > 100 {
+            milliseconds0100 = 0
+            seconds0100 += 1
         }
         
     }
     
-    func showTimer(){
-        self.labelTimer.text = "\(self.seconds):\(self.milliseconds)"
+    @objc func timerIsRunning100200() {
+        
+        showTimer100200()
+        milliseconds100200 += 1
+        if milliseconds100200 > 100 {
+            milliseconds100200 = 0
+            seconds100200 += 1
+        }
+        
     }
     
+    func showTimer0100(){
+        self.labelTimer0100.text = "\(self.seconds0100):\(self.milliseconds0100)"
+    }
+    
+    func showTimer100200(){
+        self.labelTimer100200.text = "\(self.seconds100200):\(self.milliseconds100200)"
+    }
+    
+    func stopTimer0100(){
+        self.timer0100.invalidate()
+        FirebaseManager.shared.updateUserInfoWithSeconds0100(username: Defaults().getUserName(), seconds0100: "\(self.seconds0100):\(self.milliseconds0100)"){ success in
+            
+        }
+        self.seconds0100 = 0
+        self.milliseconds0100 = 0
+        self.minutes0100 = 0
+    }
+    
+    func stopTimer100200(){
+        self.timer100200.invalidate()
+        FirebaseManager.shared.updateUserInfoWithSeconds100200(username: Defaults().getUserName(), seconds100200: "\(self.seconds100200):\(self.milliseconds100200)"){ success in
+            
+        }
+        self.seconds100200 = 0
+        self.milliseconds100200 = 0
+        self.minutes100200 = 0
+    }
+    
+    func startTimer0100(){
+        self.timer0100 = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(timerIsRunning0100), userInfo: nil, repeats: true)
+    }
+    
+    func startTimer100200(){
+        self.timer100200 = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(timerIsRunning100200), userInfo: nil, repeats: true)
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
@@ -91,15 +166,6 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         };
         if lastLocation != nil {
             traveledDistance += lastLocation.distance(from: locations.last!)
-            if switchSpeed == "MPH" {
-                if traveledDistance < 1609 {
-                    let tdF = traveledDistance / 3.28084
-                    distanceTraveled.text = (String(format: "%.1f Feet", tdF))
-                } else if traveledDistance > 1609 {
-                    let tdM = traveledDistance * 0.00062137
-                    distanceTraveled.text = (String(format: "%.1f Miles", tdM))
-                }
-            }
             if switchSpeed == "KPH" {
                 if traveledDistance < 1609 {
                     let tdMeter = traveledDistance
@@ -124,20 +190,6 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         
         //        lonDisplay.text = (String(format: "%.3f", longitude))
         //        latDisplay.text = (String(format: "%.3f", latitude))
-        if switchSpeed == "MPH" {
-            // Chekcing if speed is less than zero or a negitave number to display a zero
-            if (speedToMPH > 0) {
-                speedDisplay.text = (String(format: "%.0f mph", speedToMPH))
-                arrayMPH.append(speedToMPH)
-                let lowSpeed = arrayMPH.min()
-                let highSpeed = arrayMPH.max()
-                minSpeedLabel.text = (String(format: "Minumum - %.0f mph", lowSpeed!))
-                maxSpeedLabel.text = (String(format: "Maximum -%.0f mph", highSpeed!))
-                avgSpeed()
-            } else {
-                speedDisplay.text = "Speed : 0 mph"
-            }
-        }
         
         if switchSpeed == "KPH" {
             // Checking if speed is less than zero
@@ -149,13 +201,27 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
                 minSpeedLabel.text = (String(format: "Minumum - %.0f km/h", lowSpeed!))
                 maxSpeedLabel.text = (String(format: "Maximum - %.0f km/h", highSpeed!))
                 avgSpeed()
-                
-                if speedToKPH >= 100.0 {
-                    self.timer.invalidate()
+                if self.milliseconds0100 == 0 {
+                    self.startTimer0100()
                 }
-                //                print("Low: \(lowSpeed!) - High: \(highSpeed!)")
+                
+                if speedToKPH > 100.0 {
+                    self.stopTimer0100()
+                    self.startTimer100200()
+                }
+                
+                if speedToKPH < 100.0 {
+                    self.stopTimer100200()
+                }
+                
+                if speedToKPH > 200.0 {
+                    self.stopTimer100200()
+                }
+                
             } else {
                 speedDisplay.text = "0"
+                self.stopTimer100200()
+                self.stopTimer0100()
             }
         }
         
@@ -166,17 +232,10 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     }
     
     func avgSpeed(){
-        if switchSpeed == "MPH" {
-            let speed:[Double] = arrayMPH
-            let speedAvg = speed.reduce(0, +) / Double(speed.count)
-            avgSpeedLabel.text = (String(format: "%.0f", speedAvg))
-            //print( votesAvg )
-        } else if switchSpeed == "KPH" {
             let speed:[Double] = arrayKPH
             let speedAvg = speed.reduce(0, +) / Double(speed.count)
             avgSpeedLabel.text = (String(format: "%.0f", speedAvg))
             //print( votesAvg
-        }
     }
     
     @IBAction func startTrip(sender: AnyObject) {
@@ -185,16 +244,16 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     
     @IBAction func endTrip(sender: AnyObject) {
         locationManager.stopUpdatingLocation()
-        minutes = 0
-        seconds = 0
-        milliseconds = 0
-        print(minutes) // prints 0
-        print(seconds) // prints 0
-        print(milliseconds) // prints 0
+        minutes0100 = 0
+        seconds0100 = 0
+        milliseconds0100 = 0
+        minutes100200 = 0
+        seconds100200 = 0
+        milliseconds100200 = 0
         
-        showTimer()
+        showTimer0100()
+        showTimer100200()
         
-        self.timer.invalidate()
     }
 }
 extension TimeInterval {
