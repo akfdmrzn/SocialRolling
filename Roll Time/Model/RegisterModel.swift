@@ -8,23 +8,29 @@
 import UIKit
 import Firebase
 
-class RegisterModel {
+protocol Presentation {
+
+}
+
+class RegisterModel : Presentation {
     var username : String = ""
     var password: String = ""
     var passwordAgain: String = ""
     var carBrand: String = ""
     var carModel: String = ""
     var carImage: UIImage?
-    var topSpeed: String = ""
-    var seconds0100: String = ""
-    var seconds100200: String = ""
+    var topSpeed: Double = 0.0
+    var seconds0100: Double = 0.0
+    var seconds100200: Double = 0.0
     var documentId : String = ""
+    var isPremiumUser : Bool?
+    var order = 0
     
     init() {
         
     }
     
-    init(username: String,password : String,passwordAgain : String,carBrand : String,carModel : String,carImage : UIImage,topSpeed : String = "",seconds0100 : String = "",seconds100200 : String = "") { // Constructor
+    init(username: String,password : String,passwordAgain : String,carBrand : String,carModel : String,carImage : UIImage,topSpeed : Double = 0.0,seconds0100 : Double = 0.0,seconds100200 : Double = 0.0,documentID : String = "",isPremiumUser : Bool) { // Constructor
         self.username = username.lowercased()
         self.password = password
         self.passwordAgain = passwordAgain
@@ -34,6 +40,8 @@ class RegisterModel {
         self.topSpeed = topSpeed
         self.seconds0100 = seconds0100
         self.seconds100200 = seconds100200
+        self.documentId = documentID
+        self.isPremiumUser = isPremiumUser
     }
     
     init(snapshot: QueryDocumentSnapshot) {
@@ -44,9 +52,10 @@ class RegisterModel {
         passwordAgain = snapshotValue["passwordAgain"] as? String ?? ""
         carBrand = snapshotValue["carBrand"] as? String ?? ""
         carModel = snapshotValue["carModel"] as? String ?? ""
-        topSpeed = snapshotValue["topSpeed"] as? String ?? ""
-        seconds0100 = snapshotValue["seconds0100"] as? String ?? ""
-        seconds100200 = snapshotValue["seconds100200"] as? String ?? ""
+        topSpeed = snapshotValue["topSpeed"] as? Double ?? 0.0
+        seconds0100 = snapshotValue["seconds0100"] as? Double ?? 0.0
+        seconds100200 = snapshotValue["seconds100200"] as? Double ?? 0.0
+        isPremiumUser = snapshotValue["isPremiumUser"] as? Bool ?? false
     }
     
     func toJsonString() -> [String : Any]{
@@ -57,7 +66,8 @@ class RegisterModel {
                 "carModel" : self.carModel,
                 "topSpeed" : self.topSpeed,
                 "seconds0100" : self.seconds0100,
-                "seconds100200" : self.seconds100200]
+                "seconds100200" : self.seconds100200,
+                "isPremiumUser" : self.isPremiumUser]
     }
     
 }

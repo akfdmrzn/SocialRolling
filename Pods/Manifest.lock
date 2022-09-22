@@ -422,6 +422,9 @@ PODS:
   - FirebaseStorage (8.14.0):
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
+  - Google-Mobile-Ads-SDK (9.6.0):
+    - GoogleAppMeasurement (< 10.0, >= 7.0)
+    - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleAppMeasurement (8.14.0):
     - GoogleAppMeasurement/AdIdSupport (= 8.14.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
@@ -446,6 +449,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUserMessagingPlatform (2.0.0)
   - GoogleUtilities/AppDelegateSwizzler (7.7.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -499,6 +503,9 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (2.0.0)
+  - SDWebImage (5.12.5):
+    - SDWebImage/Core (= 5.12.5)
+  - SDWebImage/Core (5.12.5)
   - SQLite.swift (0.11.6):
     - SQLite.swift/standard (= 0.11.6)
   - SQLite.swift/standard (0.11.6)
@@ -510,8 +517,10 @@ DEPENDENCIES:
   - Firebase/Storage
   - FirebaseCore
   - FirebaseFirestore
+  - Google-Mobile-Ads-SDK
   - IQKeyboardManagerSwift
   - lottie-ios
+  - SDWebImage
   - SQLite.swift (~> 0.11.5)
 
 SPEC REPOS:
@@ -527,8 +536,10 @@ SPEC REPOS:
     - FirebaseInstallations
     - FirebaseMessaging
     - FirebaseStorage
+    - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleDataTransport
+    - GoogleUserMessagingPlatform
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
@@ -538,6 +549,7 @@ SPEC REPOS:
     - lottie-ios
     - nanopb
     - PromisesObjC
+    - SDWebImage
     - SQLite.swift
 
 SPEC CHECKSUMS:
@@ -552,8 +564,10 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 7d1d967a307c12f1aadd76844fc321cef699b1ce
   FirebaseMessaging: 5ebc42d281567658a2cb72b9ef3506e4a1a1a6e4
   FirebaseStorage: 32ab036ce11eb7e94c279a238a65efa24f81593d
+  Google-Mobile-Ads-SDK: bdf13d37aa77e368510687b5305d4972b4f9e9c7
   GoogleAppMeasurement: 71156240babd3cc6ced03e0d54816f01a880c730
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
+  GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
@@ -563,8 +577,9 @@ SPEC CHECKSUMS:
   lottie-ios: 6ac74dcc09904798f59b18cb3075c089d76be9ae
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   SQLite.swift: 46d890be8601964454bd3392527f863d1b802d45
 
-PODFILE CHECKSUM: 9326a212cb3511eab1b37e7d02a2b2e1171ce320
+PODFILE CHECKSUM: 3758b87d839ece8ab4ccffdbfb57eb4e0c28b61c
 
 COCOAPODS: 1.11.3

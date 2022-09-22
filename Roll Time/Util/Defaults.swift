@@ -13,6 +13,9 @@ public class Defaults{
         case Seconds100200
         case Seconds0100
         case TopSpeed
+        case UserId
+        case TappedAnyButtonLocation
+        case AllowedCameraAccess
     }
     
    public init(){}
@@ -25,6 +28,36 @@ public class Defaults{
             UserDefaults.standard.removePersistentDomain(forName: appDomain)
         }
         
+    }
+    
+    public func saveUserId(data:String){
+        let preferences = UserDefaults.standard
+        preferences.set( data , forKey:getIdentifier(type: .UserId))
+        preferences.synchronize()
+    }
+    
+    public func getUserId() -> String! {
+        let preferences = UserDefaults.standard
+        if preferences.object(forKey: getIdentifier(type: .UserId)) == nil {
+            return ""
+        }
+        let data:String = preferences.value(forKey: getIdentifier(type: .UserId)) as! String
+        return data
+    }
+    
+    public func saveTappedAnyLocationButton(data:Bool){
+        let preferences = UserDefaults.standard
+        preferences.set( data , forKey:getIdentifier(type: .TappedAnyButtonLocation))
+        preferences.synchronize()
+    }
+    
+    public func getTappedAnyLocationButton() -> Bool! {
+        let preferences = UserDefaults.standard
+        if preferences.object(forKey: getIdentifier(type: .TappedAnyButtonLocation)) == nil {
+            return false
+        }
+        let data:Bool = preferences.value(forKey: getIdentifier(type: .TappedAnyButtonLocation)) as! Bool
+        return data
     }
     
     public func saveUserName(data:String){
@@ -42,51 +75,65 @@ public class Defaults{
         return data
     }
     
-    public func saveSeconds100200(data:String){
+    public func saveSeconds100200(data:Double){
         let preferences = UserDefaults.standard
         preferences.set( data , forKey:getIdentifier(type: .Seconds100200))
         preferences.synchronize()
     }
     
-    public func getSeconds100200() -> String! {
+    public func getSeconds100200() -> Double! {
         let preferences = UserDefaults.standard
         if preferences.object(forKey: getIdentifier(type: .Seconds100200)) == nil {
-            return ""
+            return 0.0
         }
-        let data:String = preferences.value(forKey: getIdentifier(type: .Seconds100200)) as! String
+        let data:Double = preferences.value(forKey: getIdentifier(type: .Seconds100200)) as! Double
         return data
     }
     
-    public func saveSeconds0100(data:String){
+    public func saveSeconds0100(data:Double){
         let preferences = UserDefaults.standard
         preferences.set( data , forKey:getIdentifier(type: .Seconds0100))
         preferences.synchronize()
     }
     
-    public func getSeconds0100() -> String! {
+    public func getSeconds0100() -> Double! {
         let preferences = UserDefaults.standard
         if preferences.object(forKey: getIdentifier(type: .Seconds0100)) == nil {
-            return ""
+            return 0.0
         }
-        let data:String = preferences.value(forKey: getIdentifier(type: .Seconds0100)) as! String
+        let data:Double = preferences.value(forKey: getIdentifier(type: .Seconds0100)) as! Double
         return data
     }
     
-    public func saveTopSpeed(data:String){
+    public func saveTopSpeed(data:Double){
         let preferences = UserDefaults.standard
         preferences.set( data , forKey:getIdentifier(type: .TopSpeed))
         preferences.synchronize()
     }
     
-    public func getTopSpeed() -> String! {
+    public func getTopSpeed() -> Double! {
         let preferences = UserDefaults.standard
         if preferences.object(forKey: getIdentifier(type: .TopSpeed)) == nil {
-            return ""
+            return 0.0
         }
-        let data:String = preferences.value(forKey: getIdentifier(type: .TopSpeed)) as! String
+        let data:Double = preferences.value(forKey: getIdentifier(type: .TopSpeed)) as! Double
         return data
     }
     
+    public func saveAllowedCamera(data:Bool){
+        let preferences = UserDefaults.standard
+        preferences.set( data , forKey:getIdentifier(type: .AllowedCameraAccess))
+        preferences.synchronize()
+    }
+    
+    public func getAllowedCamera() -> Bool! {
+        let preferences = UserDefaults.standard
+        if preferences.object(forKey: getIdentifier(type: .AllowedCameraAccess)) == nil {
+            return false
+        }
+        let data:Bool = preferences.value(forKey: getIdentifier(type: .AllowedCameraAccess)) as! Bool
+        return data
+    }
     
     private  func  getIdentifier(type:DefaultsType)->String {
         switch type {
@@ -98,6 +145,12 @@ public class Defaults{
             return "Seconds0100"
         case .TopSpeed:
             return "TopSpeed"
+        case .UserId:
+            return "UserId"
+        case .TappedAnyButtonLocation:
+            return "TappedAnyButtonLocation"
+        case .AllowedCameraAccess:
+            return "AllowedCameraAccess"
         }
     }
 }

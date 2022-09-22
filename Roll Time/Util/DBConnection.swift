@@ -20,7 +20,7 @@ class DBConnection: NSObject {
         do {
             super.init()
             
-            if let fileURL = Bundle(for: type(of: self)).path(forResource: "carBrandList", ofType: "db"){
+            if let fileURL = Bundle(for: type(of: self)).path(forResource: "carOnlineDatabase", ofType: "sqli"){
                 print("Database Bağlandı")
                 db = try Connection(self.prepareDatabaseFile())
                 
@@ -32,7 +32,7 @@ class DBConnection: NSObject {
     }
     
     func prepareDatabaseFile() -> String {
-        let fileName: String = "carBrandList.db"
+        let fileName: String = "carOnlineDatabase.sqli"
         
         let fileManager:FileManager = FileManager.default
         let directory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!

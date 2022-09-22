@@ -15,4 +15,7 @@ target 'Roll Time' do
   pod 'Firebase/Auth'
   pod 'FirebaseFirestore'
   pod 'Firebase/Storage'
+  pod 'SDWebImage'
+  pod 'lottie-ios'
+  pod 'Google-Mobile-Ads-SDK'
 end

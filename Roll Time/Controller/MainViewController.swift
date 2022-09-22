@@ -8,9 +8,12 @@
 import UIKit
 import MapKit
 import CoreLocation
+import GoogleMobileAds
 
 class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
+    public static var isPremiumUser : Bool = false
     //MARK: Global Var's
+    var customLocationManager = LocationManager()
     var locationManager: CLLocationManager = CLLocationManager()
     var switchSpeed = "KPH"
     var startLocation:CLLocation!
@@ -20,6 +23,8 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     var arrayKPH: [Double]! = []
     var timer0100 = Timer()
     var timer100200 = Timer()
+    var lastSpeedKMH : Double = 0.0
+    var fullscrennAd: GADInterstitialAd?
     
     @IBOutlet weak var viewTopSpeed: UIView!
     @IBOutlet weak var viewScores0100: UIView!
@@ -36,6 +41,11 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var view0100Timer: UIView!
     @IBOutlet weak var view100200Timer: UIView!
     @IBOutlet weak var viewSpeed: UIView!
+    @IBOutlet weak var labelTopSpeed: UILabel!
+    @IBOutlet weak var label0100: UILabel!
+    @IBOutlet weak var label100200: UILabel!
+    @IBOutlet weak var viewBanner: GADBannerView!
+    
     
     var minutes0100 = 0
     var seconds0100 = 0
@@ -48,24 +58,76 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     var isClicled0100 = false
     var isClicled100200 = false
     
-    
     //MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.createAd()
+        self.viewBanner.adUnitID = BANNERSCREEN_ID
+        self.viewBanner.rootViewController = self
+        self.viewBanner.delegate = self
+        let request = GADRequest()
+//        self.viewBanner.load(request)
+        modalPresentationStyle = .fullScreen
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle  = .light
+        }
+        self.getUserProfile()
         minSpeedLabel.text = "Minimum Speed : 0"
         maxSpeedLabel.text = "Maximum Speed : 0"
-        // Ask for Authorisation from the User.
+        self.setUI()
+        self.startLocationProcess()
         
-        self.locationManager.requestAlwaysAuthorization()
-        
-        // For use in foreground
-        self.locationManager.requestWhenInUseAuthorization()
+    }
+    
+    func startLocationProcess() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
-        self.setUI()
+    }
+    
+    func makeRequestLocation() {
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+            if !LocationManager().hasLocationPermission(){
+                if Defaults().getTappedAnyLocationButton() {
+                    LocationManager().routePermissionScreen()
+                }
+                else{
+                    self.makeRequestLocation()
+                    self.startLocationProcess()
+                }
+            }
+            else{
+                self.startLocationProcess()
+            }
+    }
+
+    func getUserProfile(){
+        FirebaseManager.shared.getMyProfile { response in
+            MainViewController.isPremiumUser = response.isPremiumUser ?? false
+            Defaults().saveTopSpeed(data: response.topSpeed)
+            Defaults().saveSeconds0100(data: response.seconds0100)
+            Defaults().saveSeconds100200(data: response.seconds100200)
+            if response.seconds0100 == 0{
+                self.label0100.text = "-"
+            }
+            else{
+                self.label0100.text = "\(response.seconds0100) second"
+            }
+            if response.seconds100200 == 0{
+                self.label100200.text = "-"
+            }
+            else{
+                self.label100200.text = "\(response.seconds100200) second"
+            }
+            
+            self.labelTopSpeed.text = "\(Int(response.topSpeed)) km/h"
+        }
     }
     
     func setUI(){
@@ -77,24 +139,23 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         self.viewTopSpeed.addShadow()
     }
     
-    @IBAction func btn0100(_ sender: Any) {
-        if self.isClicled0100 {
-            self.stopTimer0100()
-        }
-        else{
-            self.startTimer0100()
-        }
-        self.isClicled0100 = !self.isClicled0100
+    func triggeredClosedAds(){
+        
     }
     
-    @IBAction func btn100200(_ sender: Any) {
-        if self.isClicled100200 {
-            self.stopTimer100200()
-        }
-        else{
-            self.startTimer100200()
-        }
-        self.isClicled100200 = !self.isClicled100200
+    func createAd(){
+        let request = GADRequest()
+           GADInterstitialAd.load(withAdUnitID:FULLSCREEN_ID,
+                                       request: request,
+                             completionHandler: { [self] ad, error in
+                               if let error = error {
+                                 print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                                 return
+                               }
+               self.fullscrennAd = ad
+               self.fullscrennAd?.fullScreenContentDelegate = self
+               self.fullscrennAd?.present(fromRootViewController: self)
+        })
     }
     
     override func viewDidLayoutSubviews() {
@@ -131,24 +192,50 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         self.labelTimer100200.text = "\(self.seconds100200):\(self.milliseconds100200)"
     }
     
-    func stopTimer0100(){
+    func stopTimer0100(isReachTarget : Bool){
         self.timer0100.invalidate()
-        FirebaseManager.shared.updateUserInfoWithSeconds0100(username: Defaults().getUserName(), seconds0100: "\(self.seconds0100):\(self.milliseconds0100)"){ success in
-            
+        let timeFormatDouble = Double("\(self.seconds0100).\(self.milliseconds0100)") ?? 0.0
+        if timeFormatDouble == 0 {
+            return
+        }
+        if timeFormatDouble < Defaults().getSeconds0100() || Defaults().getSeconds0100() == 0{
+            if isReachTarget {
+                FirebaseManager.shared.updateUserInfoWithSeconds0100(username: Defaults().getUserName(), seconds0100: timeFormatDouble){ success in
+                    Defaults().saveSeconds0100(data: timeFormatDouble)
+                    self.label0100.text = "\(timeFormatDouble) second"
+                }
+            }
+            else{
+                
+            }
         }
         self.seconds0100 = 0
         self.milliseconds0100 = 0
         self.minutes0100 = 0
+        self.showTimer0100()
     }
     
-    func stopTimer100200(){
+    func stopTimer100200(isReachTarget : Bool){
         self.timer100200.invalidate()
-        FirebaseManager.shared.updateUserInfoWithSeconds100200(username: Defaults().getUserName(), seconds100200: "\(self.seconds100200):\(self.milliseconds100200)"){ success in
-            
+        let timeFormatDouble = Double("\(self.seconds100200).\(self.milliseconds100200)") ?? 0.0
+        if timeFormatDouble == 0 {
+            return
+        }
+        if timeFormatDouble < Defaults().getSeconds100200() {
+            if isReachTarget{
+                FirebaseManager.shared.updateUserInfoWithSeconds100200(username: Defaults().getUserName(), seconds100200: timeFormatDouble){ success in
+                    Defaults().saveSeconds100200(data: timeFormatDouble)
+                    self.label100200.text = "\(timeFormatDouble) second"
+                }
+            }
+            else{
+                
+            }
         }
         self.seconds100200 = 0
         self.milliseconds100200 = 0
         self.minutes100200 = 0
+        self.showTimer100200()
     }
     
     func startTimer0100(){
@@ -180,6 +267,31 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         
     }
     
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        Defaults().saveTappedAnyLocationButton(data: true)
+        switch CLLocationManager.authorizationStatus() {
+                case .notDetermined:
+                    //Ask for permission
+                LocationManager().routePermissionScreen()
+                    break
+                case .restricted:
+            LocationManager().routePermissionScreen()
+                    break
+                case .denied:
+                    //user denied location service
+                LocationManager().routePermissionScreen()
+                    break
+                case .authorizedAlways:
+            self.startLocationProcess()
+                    break
+                case .authorizedWhenInUse:
+            self.startLocationProcess()
+                    break
+                @unknown default:
+                    break
+                }
+    }
+    
     func updateLocationInfo(latitude: CLLocationDegrees, longitude: CLLocationDegrees, speed: CLLocationSpeed, direction: CLLocationDirection) {
         let speedToMPH = (speed * 2.23694)
         let speedToKPH = (speed * 3.6)
@@ -195,47 +307,41 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
             // Checking if speed is less than zero
             if (speedToKPH > 0) {
                 speedDisplay.text = (String(format: "%.0f", speedToKPH))
-                arrayKPH.append(speedToKPH)
-                let lowSpeed = arrayKPH.min()
-                let highSpeed = arrayKPH.max()
-                minSpeedLabel.text = (String(format: "Minumum - %.0f km/h", lowSpeed!))
-                maxSpeedLabel.text = (String(format: "Maximum - %.0f km/h", highSpeed!))
-                avgSpeed()
-                if self.milliseconds0100 == 0 {
-                    self.startTimer0100()
+                let topSpeed = String(format: "%.0f", speedToKPH)
+                if Double(topSpeed) ?? 0.0 > Defaults().getTopSpeed()  {
+                    FirebaseManager.shared.updateUserInfoWithTopSpeed(username: Defaults().getUserName(), topSpeed: Double(topSpeed) ?? 0.0) { finished in
+                        Defaults().saveTopSpeed(data: Double(topSpeed) ?? 0.0)
+                        self.labelTopSpeed.text = "\(Int(topSpeed) ?? 0) km/h"
+                    }
                 }
-                
-                if speedToKPH > 100.0 {
-                    self.stopTimer0100()
-                    self.startTimer100200()
+                if self.lastSpeedKMH == 0 && speedToKPH > 0 && speedToKPH < 100{ //0 dan sonra ilk kez 0 dan büyükse yapılcak
+                    if !self.timer0100.isValid {
+                        self.startTimer0100()
+                    }
                 }
-                
-                if speedToKPH < 100.0 {
-                    self.stopTimer100200()
+                else if speedToKPH > 200.0 {
+                    self.stopTimer100200(isReachTarget: true)
                 }
-                
-                if speedToKPH > 200.0 {
-                    self.stopTimer100200()
+                else if speedToKPH < 100.0 {
+                    self.stopTimer100200(isReachTarget: false)
+                }
+                if (self.lastSpeedKMH >= 90 && (self.lastSpeedKMH <= 100))  && speedToKPH > 100 && speedToKPH < 200 { //100 den sonra ilk kez 100 den büyükse yapılcak
+                    self.stopTimer0100(isReachTarget: true)
+                    if !self.timer100200.isValid {
+                        self.startTimer100200()
+                    }
                 }
                 
             } else {
                 speedDisplay.text = "0"
-                self.stopTimer100200()
-                self.stopTimer0100()
+                self.stopTimer100200(isReachTarget: false)
+                self.stopTimer0100(isReachTarget: false)
             }
+            self.lastSpeedKMH = speedToKPH
         }
-        
-        
         // Shows the N - E - S W
         headingDisplay.text = "Heading : \(dir)"
         
-    }
-    
-    func avgSpeed(){
-            let speed:[Double] = arrayKPH
-            let speedAvg = speed.reduce(0, +) / Double(speed.count)
-            avgSpeedLabel.text = (String(format: "%.0f", speedAvg))
-            //print( votesAvg
     }
     
     @IBAction func startTrip(sender: AnyObject) {
@@ -278,4 +384,26 @@ extension TimeInterval {
 }
 extension Int {
     var msToSeconds: Double { Double(self) / 1000 }
+}
+extension MainViewController : GADBannerViewDelegate{
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+        
+    }
+}
+extension MainViewController : GADFullScreenContentDelegate{
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("Ad did fail to present full screen content.")
+      }
+
+      /// Tells the delegate that the ad will present full screen content.
+      func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad will present full screen content.")
+      }
+
+      /// Tells the delegate that the ad dismissed full screen content.
+      func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did dismiss full screen content.")
+          self.triggeredClosedAds()
+          
+      }
 }

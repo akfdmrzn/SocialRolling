@@ -20,7 +20,10 @@ class RouteViewController: BaseUIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        modalPresentationStyle = .fullScreen
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle  = .light
+        }
         self.btnLogin.makeUIButton()
         self.btnRegister.makeUIButton()
         
@@ -29,26 +32,41 @@ class RouteViewController: BaseUIViewController {
         
         self.textFieldUsername.setUIConfigure()
         self.textFieldPassword.setUIConfigure()
-        self.textFieldUsername.text = "akif"
-        self.textFieldPassword.text = "123"
+        self.textFieldPassword.isSecureTextEntry = true
     }
     @IBAction func btnActRegister(_ sender: Any) {
         self.navigationController?.pushViewController(RegisterViewController(), animated: true)
     }
     
     @IBAction func btnActLogin(_ sender: Any) {
-        FirebaseManager.shared.loginUser(username: self.textFieldUsername.text ?? "", password: self.textFieldPassword.text ?? "") { success in
+        let username = self.textFieldUsername.text ?? ""
+        let password = self.textFieldPassword.text ?? ""
+        if username.isEmpty {
+            self.showAlertMsg(msg: "Please Fill The Username Field") {
+                
+            }
+            return
+        }
+        else if password.isEmpty {
+            self.showAlertMsg(msg: "Please Fill The Password Field") {
+                
+            }
+            return
+        }
+        FirebaseManager.shared.loginUser(username: username, password: password) { success in
             if success {
+                Defaults().saveUserName(data: username)
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
                     let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let tabbarVC = storyBoard.instantiateViewController(withIdentifier: "CustomTabViewController")
                     self.navigationController?.present(tabbarVC, animated: true, completion: {
-                        Defaults().saveUserName(data: self.textFieldUsername.text ?? "")
                     })
                 }
             }
             else{
-                print("e")
+                self.showAlertMsg(msg: "Wrong Password Or Username.Please Check The Fields") {
+                    
+                }
             }
         }
     }

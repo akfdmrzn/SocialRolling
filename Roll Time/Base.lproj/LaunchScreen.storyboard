@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,10 +13,49 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bmwFront" translatesAutoresizingMaskIntoConstraints="NO" id="ALc-0y-ABp">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqz-eE-CsM">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.80660758113229514" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speed" translatesAutoresizingMaskIntoConstraints="NO" id="eIo-hT-nWf">
+                                <rect key="frame" x="107" y="126.5" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="eIo-hT-nWf" secondAttribute="height" multiplier="1:1" id="mFt-vh-owD"/>
+                                    <constraint firstAttribute="width" constant="200" id="oDN-WJ-GsA"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rolling Time" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="35" translatesAutoresizingMaskIntoConstraints="NO" id="sS8-Lp-W7D">
+                                <rect key="frame" x="10" y="376.5" width="394" height="62.5"/>
+                                <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="50"/>
+                                <color key="textColor" red="0.44705882349999998" green="0.65098039220000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="sS8-Lp-W7D" firstAttribute="top" secondItem="eIo-hT-nWf" secondAttribute="bottom" constant="50" id="75d-Dq-ls4"/>
+                            <constraint firstItem="ALc-0y-ABp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="HPY-df-AEu"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cqz-eE-CsM" secondAttribute="trailing" id="JlQ-NS-EUB"/>
+                            <constraint firstItem="sS8-Lp-W7D" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="L9k-Eo-UXP"/>
+                            <constraint firstItem="eIo-hT-nWf" firstAttribute="centerY" secondItem="ALc-0y-ABp" secondAttribute="centerY" multiplier="0.5" id="MAZ-ie-mXw"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cqz-eE-CsM" secondAttribute="bottom" id="OOp-2q-32j"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ALc-0y-ABp" secondAttribute="trailing" id="W3T-zq-AXc"/>
+                            <constraint firstItem="ALc-0y-ABp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="YK4-F0-OgY"/>
+                            <constraint firstItem="sS8-Lp-W7D" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="a9S-wn-G0q"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sS8-Lp-W7D" secondAttribute="trailing" constant="10" id="bft-Kl-HWi"/>
+                            <constraint firstItem="cqz-eE-CsM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="gEh-gg-Qxj"/>
+                            <constraint firstItem="eIo-hT-nWf" firstAttribute="centerX" secondItem="ALc-0y-ABp" secondAttribute="centerX" id="j5W-zK-4kj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ALc-0y-ABp" secondAttribute="bottom" id="qSh-pu-Kzn"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sS8-Lp-W7D" secondAttribute="trailing" constant="10" id="sby-nQ-1zO"/>
+                            <constraint firstItem="cqz-eE-CsM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xZl-OB-Ipv"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -22,4 +63,8 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bmwFront" width="480" height="800"/>
+        <image name="speed" width="256" height="256"/>
+    </resources>
 </document>

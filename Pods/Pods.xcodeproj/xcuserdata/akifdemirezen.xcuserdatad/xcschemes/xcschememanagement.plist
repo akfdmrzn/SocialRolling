@@ -59,12 +59,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Google-Mobile-Ads-SDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GoogleAppMeasurement.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>GoogleDataTransport.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GoogleUserMessagingPlatform.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -85,6 +95,11 @@
 			<false/>
 		</dict>
 		<key>PromisesObjC.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

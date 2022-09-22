@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 class RegisterViewController: BaseUIViewController {
 
@@ -35,7 +36,10 @@ class RegisterViewController: BaseUIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        modalPresentationStyle = .fullScreen
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle  = .light
+        }
         self.btnRegister.makeUIButton()
         
         self.imageViewCar.layer.cornerRadius = CornerRadiusButton
@@ -61,20 +65,128 @@ class RegisterViewController: BaseUIViewController {
         self.carBrandList = DBConnection().getBrandList()
         self.textFieldCarBrand.text = self.carBrandList.first?.name ?? ""
         self.choosenBrandId = Int(self.carBrandList.first?.idBrand ?? 0)
+        self.carModelList = DBConnection().getCarList(fkBrandId: self.choosenBrandId)
         
         self.textFieldCarBrand.setUIConfigure()
         self.textFieldCarModel.setUIConfigure()
+        self.textFieldPassword.isSecureTextEntry = true
+        self.textFieldAgainPassword.isSecureTextEntry = true
     }
 
     @IBAction func btnActAddCarImage(_ sender: Any) {
-        ImagePickerManager().pickImage(self){ image in
-            self.choosedImage = image
-        }
+        PHPhotoLibrary.requestAuthorization({ status in
+            switch status {
+            case .notDetermined:
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(
+                        title: "We were unable to load your album groups. Sorry!",
+                        message: "You can enable access in Privacy Settings",
+                        preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(settingsURL)
+                        }
+                    }))
+                    self.present(alert, animated: true)
+                }
+                
+            case .denied, .restricted:
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(
+                        title: "We were unable to load your album groups. Sorry!",
+                        message: "You can enable access in Privacy Settings",
+                        preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(settingsURL)
+                        }
+                    }))
+                    self.present(alert, animated: true)
+                }
+                
+            case .authorized:
+                DispatchQueue.main.async {
+                    ImagePickerManager().pickImage(self){ image in
+                        self.choosedImage = image
+                    }
+                }
+            case .limited:
+                DispatchQueue.main.async {
+                    ImagePickerManager().pickImage(self){ image in
+                        self.choosedImage = image
+                    }
+                }
+            @unknown default:
+                fatalError("PHPhotoLibrary::execute - \"Unknown case\"")
+            }
+        })
     }
     
     @IBAction func btnActRegister(_ sender: Any) {
-        let registerModel = RegisterModel.init(username: self.textFieldUsername.text?.lowercased() ?? "", password: self.textFieldPassword.text ?? "", passwordAgain: self.textFieldAgainPassword.text ?? "", carBrand: self.textFieldCarBrand.text ?? "", carModel: self.textFieldCarModel.text ?? "",carImage: (self.imageViewCar.image ?? UIImage.init(named: "electric-car"))!)
+        let username = self.textFieldUsername.text ?? ""
+        let password = self.textFieldPassword.text ?? ""
+        let passwordAgain = self.textFieldAgainPassword.text ?? ""
+        let carBrand = self.textFieldCarBrand.text ?? ""
+        let carModel = self.textFieldCarModel.text ?? ""
+        if username.isEmpty {
+            self.showAlertMsg(msg: "Please Fill The Username Field") {
+                
+            }
+            return
+        }
+        else if password.isEmpty {
+            self.showAlertMsg(msg: "Please Fill The Password Field") {
+                
+            }
+            return
+        }
+        else if passwordAgain.isEmpty {
+            self.showAlertMsg(msg: "Please Fill The Again Password Field") {
+                
+            }
+            return
+        }
+        else if carBrand.isEmpty {
+            self.showAlertMsg(msg: "Please Fill The Car Brand Field") {
+                
+            }
+            return
+        }
+        else if carModel.isEmpty {
+            self.showAlertMsg(msg: "Please Fill The Car Brand Field") {
+                
+            }
+            return
+        }
+        else if password.count < 6 {
+            self.showAlertMsg(msg: "Your password must be at least 6 characters") {
+                
+            }
+            return
+        }
+        else if password != passwordAgain {
+            self.showAlertMsg(msg: "Your password must be same") {
+                
+            }
+            return
+        }
+        FirebaseManager.shared.checkValidUserName(username: username) { success in
+            if success{
+                
+            }
+            else{
+                self.showAlertMsg(msg: "This Username Is Already Used.Please Try Another Username") {
+                    
+                }
+                return
+            }
+        }
+        IndicatorManager.shared.showIndicator()
+        let registerModel = RegisterModel.init(username: self.textFieldUsername.text?.lowercased() ?? "", password: self.textFieldPassword.text ?? "", passwordAgain: self.textFieldAgainPassword.text ?? "", carBrand: self.textFieldCarBrand.text ?? "", carModel: self.textFieldCarModel.text ?? "",carImage: (self.imageViewCar.image ?? UIImage.init(named: "carPhoto"))!, isPremiumUser: false)
         FirebaseManager.shared.registerUser(model: registerModel) { documentId in
+            IndicatorManager.shared.hideIndicator()
             if !documentId.isEmpty {
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
                     let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -85,6 +197,9 @@ class RegisterViewController: BaseUIViewController {
                 }
             }
         }
+    }
+    @IBAction func btnActBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     
 }
