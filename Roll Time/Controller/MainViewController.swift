@@ -9,6 +9,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import GoogleMobileAds
+import StoreKit
 
 class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     public static var isPremiumUser : Bool = false
@@ -66,17 +67,15 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         self.viewBanner.rootViewController = self
         self.viewBanner.delegate = self
         let request = GADRequest()
-//        self.viewBanner.load(request)
+
         modalPresentationStyle = .fullScreen
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle  = .light
         }
-        self.getUserProfile()
         minSpeedLabel.text = "Minimum Speed : 0"
         maxSpeedLabel.text = "Maximum Speed : 0"
         self.setUI()
         self.startLocationProcess()
-        
     }
     
     func startLocationProcess() {
@@ -93,6 +92,10 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if Defaults().getLaunchCount() == 3 || Defaults().getLaunchCount() == 10 || Defaults().getLaunchCount() == 20 {
+            self.rateAppStore()
+        }
+        self.getUserProfile()
             if !LocationManager().hasLocationPermission(){
                 if Defaults().getTappedAnyLocationButton() {
                     LocationManager().routePermissionScreen()
@@ -108,25 +111,23 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
     }
 
     func getUserProfile(){
-        FirebaseManager.shared.getMyProfile { response in
-            MainViewController.isPremiumUser = response.isPremiumUser ?? false
-            Defaults().saveTopSpeed(data: response.topSpeed)
-            Defaults().saveSeconds0100(data: response.seconds0100)
-            Defaults().saveSeconds100200(data: response.seconds100200)
-            if response.seconds0100 == 0{
+        FirebaseManager.shared.getCarProfile(carId: Defaults().getChoosenCarId()) { carModel in
+            Defaults().saveTopSpeed(data: carModel.topSpeed)
+            Defaults().saveSeconds0100(data: carModel.seconds0100)
+            Defaults().saveSeconds100200(data: carModel.seconds100200)
+            if carModel.seconds0100 == 0 {
                 self.label0100.text = "-"
             }
             else{
-                self.label0100.text = "\(response.seconds0100) second"
+                self.label0100.text = "\(carModel.seconds0100) second"
             }
-            if response.seconds100200 == 0{
+            if carModel.seconds100200 == 0{
                 self.label100200.text = "-"
             }
             else{
-                self.label100200.text = "\(response.seconds100200) second"
+                self.label100200.text = "\(carModel.seconds100200) second"
             }
-            
-            self.labelTopSpeed.text = "\(Int(response.topSpeed)) km/h"
+            self.labelTopSpeed.text = "\(Int(carModel.topSpeed)) km/h"
         }
     }
     
@@ -137,6 +138,7 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         self.viewScores0100.addShadow()
         self.viewScores100200.addShadow()
         self.viewTopSpeed.addShadow()
+        
     }
     
     func triggeredClosedAds(){
@@ -198,6 +200,9 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         if timeFormatDouble == 0 {
             return
         }
+        if isReachTarget{
+            self.showAlertViewTimer(msg: "Last 0-100: \(timeFormatDouble)")
+        }
         if timeFormatDouble < Defaults().getSeconds0100() || Defaults().getSeconds0100() == 0{
             if isReachTarget {
                 FirebaseManager.shared.updateUserInfoWithSeconds0100(username: Defaults().getUserName(), seconds0100: timeFormatDouble){ success in
@@ -221,9 +226,12 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         if timeFormatDouble == 0 {
             return
         }
+        if isReachTarget{
+            self.showAlertViewTimer(msg: "Last 100-200: \(timeFormatDouble)")
+        }
         if timeFormatDouble < Defaults().getSeconds100200() {
             if isReachTarget{
-                FirebaseManager.shared.updateUserInfoWithSeconds100200(username: Defaults().getUserName(), seconds100200: timeFormatDouble){ success in
+                FirebaseManager.shared.updateUserInfoWithSeconds100200(seconds100200: timeFormatDouble) { success in
                     Defaults().saveSeconds100200(data: timeFormatDouble)
                     self.label100200.text = "\(timeFormatDouble) second"
                 }
@@ -236,6 +244,20 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         self.milliseconds100200 = 0
         self.minutes100200 = 0
         self.showTimer100200()
+    }
+    
+    func rateAppStore() {
+        if #available(iOS 10.3, *) {
+            SKStoreReviewController.requestReview()
+
+        } else if let url = URL(string: "itms-apps://itunes.apple.com/app/id1629980218") {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
     }
     
     func startTimer0100(){
@@ -314,7 +336,7 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
                         self.labelTopSpeed.text = "\(Int(topSpeed) ?? 0) km/h"
                     }
                 }
-                if self.lastSpeedKMH == 0 && speedToKPH > 0 && speedToKPH < 100{ //0 dan sonra ilk kez 0 dan büyükse yapılcak
+                if self.lastSpeedKMH <= 0 && speedToKPH > 0 && speedToKPH < 100{ //0 dan sonra ilk kez 0 dan büyükse yapılcak
                     if !self.timer0100.isValid {
                         self.startTimer0100()
                     }
@@ -325,7 +347,7 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
                 else if speedToKPH < 100.0 {
                     self.stopTimer100200(isReachTarget: false)
                 }
-                if (self.lastSpeedKMH >= 90 && (self.lastSpeedKMH <= 100))  && speedToKPH > 100 && speedToKPH < 200 { //100 den sonra ilk kez 100 den büyükse yapılcak
+                if (self.lastSpeedKMH > 60) && (self.lastSpeedKMH < 100) && speedToKPH >= 100 && speedToKPH < 200 { //100 den sonra ilk kez 100 den büyükse yapılcak
                     self.stopTimer0100(isReachTarget: true)
                     if !self.timer100200.isValid {
                         self.startTimer100200()
@@ -359,6 +381,28 @@ class MainViewController: BaseUIViewController, CLLocationManagerDelegate {
         
         showTimer0100()
         showTimer100200()
+        
+    }
+    
+    private func showAlertViewTimer(msg: String){
+        let viewAlert = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.bounds.width, height: 0))
+        viewAlert.backgroundColor = UIColor.init(red: 35.0/255.0, green: 220.0/255.0, blue: 110.0/255.0, alpha: 1.0)
+        let labelAlert = UILabel.init(frame: CGRect.init(x: 0, y: 60, width: self.view.bounds.width, height: 30))
+        labelAlert.textAlignment = .center
+        labelAlert.font = UIFont.init(name: "Helvetica-Bold", size: 20)
+        labelAlert.text = msg
+        viewAlert.addSubview(labelAlert)
+        viewAlert.layer.cornerRadius = 15.0
+        self.view.addSubview(viewAlert)
+        UIView.animate(withDuration: 0.8, delay: 0.0, options: [.curveEaseInOut], animations: {
+            viewAlert.frame = CGRect.init(x: 0, y: 0, width: self.view.bounds.width, height: 100)
+            }) { (finished) in
+                if finished {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: {
+                        viewAlert.removeFromSuperview()
+                    })
+                }
+            }
         
     }
 }

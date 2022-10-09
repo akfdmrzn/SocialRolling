@@ -74,54 +74,64 @@ class RegisterViewController: BaseUIViewController {
     }
 
     @IBAction func btnActAddCarImage(_ sender: Any) {
-        PHPhotoLibrary.requestAuthorization({ status in
-            switch status {
-            case .notDetermined:
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(
-                        title: "We were unable to load your album groups. Sorry!",
-                        message: "You can enable access in Privacy Settings",
-                        preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                    alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
-                        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                            UIApplication.shared.open(settingsURL)
-                        }
-                    }))
-                    self.present(alert, animated: true)
-                }
-                
-            case .denied, .restricted:
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(
-                        title: "We were unable to load your album groups. Sorry!",
-                        message: "You can enable access in Privacy Settings",
-                        preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                    alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
-                        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                            UIApplication.shared.open(settingsURL)
-                        }
-                    }))
-                    self.present(alert, animated: true)
-                }
-                
-            case .authorized:
-                DispatchQueue.main.async {
-                    ImagePickerManager().pickImage(self){ image in
-                        self.choosedImage = image
-                    }
-                }
-            case .limited:
-                DispatchQueue.main.async {
-                    ImagePickerManager().pickImage(self){ image in
-                        self.choosedImage = image
-                    }
-                }
-            @unknown default:
-                fatalError("PHPhotoLibrary::execute - \"Unknown case\"")
+        if #available(iOS 14, *) {
+            PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
+                self.setImageByStatus(status: status)
             }
-        })
+        } else {
+            PHPhotoLibrary.requestAuthorization({ status in
+                self.setImageByStatus(status: status)
+            })
+        }
+    }
+    
+    private func setImageByStatus(status: PHAuthorizationStatus){
+        switch status {
+        case .notDetermined:
+            DispatchQueue.main.async {
+                let alert = UIAlertController(
+                    title: "We were unable to load your album groups. Sorry!",
+                    message: "You can enable access in Privacy Settings",
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }))
+                self.present(alert, animated: true)
+            }
+            
+        case .denied, .restricted:
+            DispatchQueue.main.async {
+                let alert = UIAlertController(
+                    title: "We were unable to load your album groups. Sorry!",
+                    message: "You can enable access in Privacy Settings",
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }))
+                self.present(alert, animated: true)
+            }
+            
+        case .authorized:
+            DispatchQueue.main.async {
+                ImagePickerManager().pickImage(self){ image in
+                    self.choosedImage = image
+                }
+            }
+        case .limited:
+            DispatchQueue.main.async {
+                ImagePickerManager().pickImage(self){ image in
+                    self.choosedImage = image
+                }
+            }
+        @unknown default:
+            fatalError("PHPhotoLibrary::execute - \"Unknown case\"")
+        }
     }
     
     @IBAction func btnActRegister(_ sender: Any) {
@@ -184,16 +194,22 @@ class RegisterViewController: BaseUIViewController {
             }
         }
         IndicatorManager.shared.showIndicator()
-        let registerModel = RegisterModel.init(username: self.textFieldUsername.text?.lowercased() ?? "", password: self.textFieldPassword.text ?? "", passwordAgain: self.textFieldAgainPassword.text ?? "", carBrand: self.textFieldCarBrand.text ?? "", carModel: self.textFieldCarModel.text ?? "",carImage: (self.imageViewCar.image ?? UIImage.init(named: "carPhoto"))!, isPremiumUser: false)
+        let registerModel = RegisterModel.init(username: self.textFieldUsername.text?.lowercased() ?? "", password: self.textFieldPassword.text ?? "", passwordAgain: self.textFieldAgainPassword.text ?? "", isPremiumUser: false)
         FirebaseManager.shared.registerUser(model: registerModel) { documentId in
             IndicatorManager.shared.hideIndicator()
             if !documentId.isEmpty {
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let tabbarVC = storyBoard.instantiateViewController(withIdentifier: "CustomTabViewController")
-                    self.navigationController?.present(tabbarVC, animated: true, completion: {
-                        Defaults().saveUserName(data: self.textFieldUsername.text ?? "")
-                    })
+                    let myCarModel = MyCarModel.init(topSpeed: 0.0, seconds0100: 0.0, seconds100200: 0.0, carBrand: self.textFieldCarBrand.text ?? "", carModel: self.textFieldCarModel.text ?? "", carImage: (self.imageViewCar.image ?? UIImage.init(named: "carPhoto"))!,userdocumentId: Defaults().getUserId(), isChoosenCar: true)
+                    FirebaseManager.shared.registerCar(model: myCarModel) { documentId in
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                            let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let tabbarVC = storyBoard.instantiateViewController(withIdentifier: "CustomTabViewController")
+                            self.navigationController?.present(tabbarVC, animated: true, completion: {
+                                Defaults().saveUserName(data: self.textFieldUsername.text ?? "")
+                                
+                            })
+                        }
+                    }
                 }
             }
         }

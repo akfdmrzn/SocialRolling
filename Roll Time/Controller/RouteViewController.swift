@@ -55,6 +55,13 @@ class RouteViewController: BaseUIViewController {
         }
         FirebaseManager.shared.loginUser(username: username, password: password) { success in
             if success {
+                FirebaseManager.shared.getMyAllCarsProfile(userId: Defaults().getUserId()) { carList in
+                    for item in carList{
+                        if item.isChoosenCar {
+                            Defaults().saveChoosenCarId(data: item._id)
+                        }
+                    }
+                }
                 Defaults().saveUserName(data: username)
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
                     let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

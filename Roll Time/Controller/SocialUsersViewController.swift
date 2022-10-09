@@ -36,7 +36,7 @@ class SocialUsersViewController: UIViewController {
         self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
         self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.lightGray], for: .normal)
         self.segmentControl.tintColor = UIColor.init(hexString: "#70A8F8")
-        FirebaseManager.shared.getAllUsers(by0100Seconds: true) { response in
+        FirebaseManager.shared.getAllCars(by0100Seconds: true) { response in
             self.carList = response
             self.applyAdsIfPossible()
         }
@@ -68,21 +68,21 @@ class SocialUsersViewController: UIViewController {
         let index = sender.selectedSegmentIndex
         if index == 0 {
             self.selectedIndex = 0
-            FirebaseManager.shared.getAllUsers(by0100Seconds: true) { response in
+            FirebaseManager.shared.getAllCars(by0100Seconds: true) { response in
                 self.carList = response
                 self.applyAdsIfPossible()
             }
         }
         else if index == 1{
             self.selectedIndex = 1
-            FirebaseManager.shared.getAllUsers(by100200Seconds: true) { response in
+            FirebaseManager.shared.getAllCars(by100200Seconds: true) { response in
                 self.carList = response
                 self.applyAdsIfPossible()
             }
         }
         else if index == 2{
             self.selectedIndex = 2
-            FirebaseManager.shared.getAllUsers(byTopSpeed: true) { response in
+            FirebaseManager.shared.getAllCars(byTopSpeed: true) { response in
                 self.carList = response
                 self.applyAdsIfPossible()
             }
@@ -128,8 +128,8 @@ extension SocialUsersViewController : UITableViewDelegate,UITableViewDataSource{
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: SocialUsersTableViewCell.identifier, for: indexPath) as! SocialUsersTableViewCell
-        if let carItem = self.carList[indexPath.row] as? RegisterModel {
-            cell.setData(model: carItem,row: indexPath.row + 1,selectedIndex: self.selectedIndex)
+        if let carItem = self.carList[indexPath.row] as? MyCarModel {
+            cell.setData(model: carItem,row: indexPath.row + 1,selectedIndex: self.selectedIndex, isYourProfileListCar: false)
             return cell
         }
         return UITableViewCell.init()
@@ -138,8 +138,8 @@ extension SocialUsersViewController : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ProfileCarViewController") as! ProfileCarViewController
-        if let carItem = self.carList[indexPath.row] as? RegisterModel{
-            vc.userModel = carItem
+        if let carItem = self.carList[indexPath.row] as? MyCarModel{
+            vc.carModel = carItem
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -24,9 +24,10 @@ class ProfileCarViewController: UIViewController {
     @IBOutlet weak var viewDelete: UIView!
     @IBOutlet weak var btnDelete: UIButton!
     @IBOutlet weak var labelUsername: UILabel!
+    @IBOutlet weak var viewMakeDefaultCar: UIView!
     
-    var userModel : RegisterModel?
-    var myCarModel : RegisterModel?
+    var carModel : MyCarModel?
+    var isYourCar : Bool = false
     
     @IBOutlet weak var viewScores: UIView!
     
@@ -34,6 +35,9 @@ class ProfileCarViewController: UIViewController {
         super.viewDidLoad()
         self.btnLogOut.makeUIButton()
         self.btnDelete.makeUIButton()
+        self.viewMakeDefaultCar.layer.cornerRadius = CornerRadiusButton
+        self.viewMakeDefaultCar.layer.borderWidth = 1.0
+        self.viewMakeDefaultCar.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,38 +45,34 @@ class ProfileCarViewController: UIViewController {
     }
     
     func setData(){
-        if userModel != nil {
+        if self.isYourCar{
+            self.btnEdit.isHidden = false
+            self.btnBack.isHidden = false
+            self.viewDelete.isHidden = false
+        }else{
             self.btnEdit.isHidden = true
-            self.labelBrand.text = userModel?.carBrand ?? ""
-            self.labelModel.text = userModel?.carModel ?? ""
-            self.imageViewCar.sd_setImage(with: URL.init(string: "https://firebasestorage.googleapis.com/v0/b/social-rolling.appspot.com/o/\(userModel?.documentId ?? "").jpeg?alt=media&token=9cc8c61f-8622-4eee-abf4-7e9676de7360"), placeholderImage: nil, options: .refreshCached, progress: nil, completed: nil)
-            self.labelTopSpeed.text = "\(Int(userModel?.topSpeed ?? 0.0)) KM/H"
-            self.label0100.text = "\(userModel?.seconds0100 ?? 0.0) second"
-            self.label100200.text = "\(userModel?.seconds100200 ?? 0.0) second"
-            self.viewScores.isHidden = false
-            self.labelUsername.text = userModel?.username ?? ""
+            self.btnBack.isHidden = false
             self.viewDelete.isHidden = true
         }
-        else{
-            self.getUserProfile()
-            self.btnEdit.isHidden = false
-            self.btnBack.isHidden = true
-            self.viewDelete.isHidden = false
-        }
+        self.getCarProfile()
     }
     
-    func getUserProfile(){
-        FirebaseManager.shared.getMyProfile { response in
-            self.myCarModel = response
-            self.labelBrand.text = self.myCarModel?.carBrand ?? ""
-            self.labelModel.text = self.myCarModel?.carModel ?? ""
-            self.imageViewCar.sd_setImage(with: URL.init(string: "https://firebasestorage.googleapis.com/v0/b/social-rolling.appspot.com/o/\(self.myCarModel?.documentId ?? "").jpeg?alt=media&token=9cc8c61f-8622-4eee-abf4-7e9676de7360"), placeholderImage: nil, options: .refreshCached, progress: nil, completed: nil)
-            self.labelTopSpeed.text = "\(Int(self.myCarModel?.topSpeed ?? 0.0)) KM/H"
-            self.label0100.text = "\(self.myCarModel?.seconds0100 ?? 0.0) second"
-            self.label100200.text = "\(self.myCarModel?.seconds100200 ?? 0.0) second"
+    func getCarProfile(){
+        FirebaseManager.shared.getCarProfile(carId: self.carModel?._id ?? "", completionBlock: { carModel in
+            self.labelBrand.text = carModel.carBrand
+            self.labelModel.text = carModel.carModel
+            self.imageViewCar.sd_setImage(with: URL.init(string: carModel.carImageString), placeholderImage: nil, options: .refreshCached, progress: nil, completed: nil)
+            self.labelTopSpeed.text = "\(Int(carModel.topSpeed)) KM/H"
+            self.label0100.text = "\(carModel.seconds0100) second"
+            self.label100200.text = "\(carModel.seconds100200) second"
             self.viewScores.isHidden = false
-            self.labelUsername.text = self.myCarModel?.username ?? ""
-        }
+            self.labelUsername.text = Defaults().getUserName()
+            if self.isYourCar {
+                self.viewMakeDefaultCar.isHidden = carModel.isChoosenCar
+            }else{
+                self.viewMakeDefaultCar.isHidden = true
+            }
+        })
     }
     
     @IBAction func btnActDelete(_ sender: Any) {
@@ -89,60 +89,70 @@ class ProfileCarViewController: UIViewController {
             }
         }
     }
+    private func setImageByStatus(status: PHAuthorizationStatus){
+        switch status {
+        case .notDetermined:
+            DispatchQueue.main.async {
+                let alert = UIAlertController(
+                    title: "We were unable to load your album groups. Sorry!",
+                    message: "You can enable access in Privacy Settings",
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }))
+                self.present(alert, animated: true)
+            }
+            
+        case .denied, .restricted:
+            DispatchQueue.main.async {
+                let alert = UIAlertController(
+                    title: "We were unable to load your album groups. Sorry!",
+                    message: "You can enable access in Privacy Settings",
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }))
+                self.present(alert, animated: true)
+            }
+            
+        case .authorized:
+            DispatchQueue.main.async {
+                ImagePickerManager().pickImage(self){ image in
+                    FirebaseManager.shared.uploadPhotoForCar(carImage: image, documentId: self.carModel?._id ?? "") { finished in
+                        self.getCarProfile()
+                    }
+                }
+            }
+        case .limited:
+            DispatchQueue.main.async {
+                ImagePickerManager().pickImage(self){ image in
+                    FirebaseManager.shared.uploadPhotoForCar(carImage: image, documentId: self.carModel?._id ?? "") { finished in
+                        self.getCarProfile()
+                    }
+                }
+            }
+        @unknown default:
+            fatalError("PHPhotoLibrary::execute - \"Unknown case\"")
+        }
+    }
     
     @IBAction func btnActEdit(_ sender: Any) {
-        PHPhotoLibrary.requestAuthorization({ status in
-            switch status {
-            case .notDetermined:
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(
-                        title: "We were unable to load your album groups. Sorry!",
-                        message: "You can enable access in Privacy Settings",
-                        preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                    alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
-                        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                            UIApplication.shared.open(settingsURL)
-                        }
-                    }))
-                    self.present(alert, animated: true)
-                }
-                
-            case .denied, .restricted:
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(
-                        title: "We were unable to load your album groups. Sorry!",
-                        message: "You can enable access in Privacy Settings",
-                        preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                    alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
-                        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                            UIApplication.shared.open(settingsURL)
-                        }
-                    }))
-                    self.present(alert, animated: true)
-                }
-                
-            case .authorized:
-                DispatchQueue.main.async {
-                    ImagePickerManager().pickImage(self){ image in
-                        FirebaseManager.shared.uploadPhotoForRegister(carImage: image, documentId: Defaults().getUserId()) { finished in
-                            self.getUserProfile()
-                        }
-                    }
-                }
-            case .limited:
-                DispatchQueue.main.async {
-                    ImagePickerManager().pickImage(self){ image in
-                        FirebaseManager.shared.uploadPhotoForRegister(carImage: image, documentId: Defaults().getUserId()) { finished in
-                            self.getUserProfile()
-                        }
-                    }
-                }
-            @unknown default:
-                fatalError("PHPhotoLibrary::execute - \"Unknown case\"")
+        if #available(iOS 14, *) {
+            PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
+                self.setImageByStatus(status: status)
             }
-        })
+        } else {
+            PHPhotoLibrary.requestAuthorization({ status in
+                self.setImageByStatus(status: status)
+            })
+        }
+        
     }
     
     @IBAction func btnActLogOut(_ sender: Any) {
@@ -151,6 +161,14 @@ class ProfileCarViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "MainLaunchNavigationController")
         AppDelegate.window?.rootViewController = vc
         AppDelegate.window?.makeKeyAndVisible()
+    }
+    
+    @IBAction func btnActMakeDefault(_ sender: Any) {
+        FirebaseManager.shared.updateChoosenCar(carId: self.carModel?._id ?? "") {
+            self.showAlertMsg(msg: "Your Default Car Changed") {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {

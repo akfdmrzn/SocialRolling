@@ -19,17 +19,17 @@ class SocialUsersTableViewCell: UITableViewCell {
     @IBOutlet weak var labelUsername: UILabel!
     @IBOutlet weak var labelTime: UILabel!
     @IBOutlet weak var labelTimeTitle: UILabel!
+    @IBOutlet weak var viewChoosenCar: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
     }
 
-    func setData(model : RegisterModel,row : Int,selectedIndex : Int){
-        let fullUrl = "https://firebasestorage.googleapis.com/v0/b/social-rolling.appspot.com/o/\(model.documentId).jpeg?alt=media&token=9cc8c61f-8622-4eee-abf4-7e9676de7360"
-        self.imageViewCar.sd_setImage(with: URL.init(string: fullUrl), placeholderImage: nil, options: .refreshCached, progress: nil, completed: nil)
+    func setData(model : MyCarModel,row : Int,selectedIndex : Int,isYourProfileListCar: Bool){
+        self.imageViewCar.sd_setImage(with: URL.init(string: model.carImageString), placeholderImage: nil, options: .refreshCached, progress: nil, completed: nil)
         self.labelCar.text = "\(model.carBrand) - \(model.carModel)"
-        self.labelUsername.text = model.username
+        self.labelUsername.text = "Akif"
         self.labelOrder.text = "\(model.order)"
         if selectedIndex == 0 {
             self.labelTimeTitle.text = "Seconds"
@@ -42,6 +42,12 @@ class SocialUsersTableViewCell: UITableViewCell {
         else if selectedIndex == 2 {
             self.labelTimeTitle.text = "KM/H"
             self.labelTime.text = "\(model.topSpeed)"
+        }
+        if isYourProfileListCar && model.isChoosenCar{
+            self.viewChoosenCar.isHidden = false
+            self.labelOrder.text = "\(row)"
+        } else {
+            self.viewChoosenCar.isHidden = true
         }
     }
     

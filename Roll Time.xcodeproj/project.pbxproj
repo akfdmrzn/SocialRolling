@@ -43,10 +43,13 @@
 		BF94B88227EF93D5007E8618 /* ExtensionTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94B88127EF93D5007E8618 /* ExtensionTextField.swift */; };
 		BF94B88527EFCBC8007E8618 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94B88427EFCBC8007E8618 /* FirebaseManager.swift */; };
 		BF94B88727EFCFB1007E8618 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94B88627EFCFB1007E8618 /* RegisterModel.swift */; };
+		BF99A00128EA24B900F9FAF8 /* MyCarListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A00028EA24B900F9FAF8 /* MyCarListViewController.swift */; };
 		BFB6E2F62853F7F0005BB7C0 /* SocialUsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6E2F42853F7F0005BB7C0 /* SocialUsersTableViewCell.swift */; };
 		BFB6E2F72853F7F0005BB7C0 /* SocialUsersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFB6E2F52853F7F0005BB7C0 /* SocialUsersTableViewCell.xib */; };
 		BFB6E2F92853F805005BB7C0 /* ExtensionUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6E2F82853F805005BB7C0 /* ExtensionUITableViewCell.swift */; };
 		BFB6E2FB28540334005BB7C0 /* SocialUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6E2FA28540334005BB7C0 /* SocialUsersViewController.swift */; };
+		BFD1D10628F2E4AE00F46033 /* AddCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD1D10428F2E4AE00F46033 /* AddCarViewController.swift */; };
+		BFD1D10728F2E4AE00F46033 /* AddCarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD1D10528F2E4AE00F46033 /* AddCarViewController.xib */; };
 		BFF326AF27FA44D90011659B /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF326AE27FA44D90011659B /* Defaults.swift */; };
 		BFFDAA6E285F87F400D483E5 /* CustomTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFDAA6D285F87F400D483E5 /* CustomTabbarController.swift */; };
 		BFFFAB7F2861D4A100557D00 /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFAB7E2861D4A100557D00 /* PhotoLibrary.swift */; };
@@ -115,10 +118,13 @@
 		BF94B88127EF93D5007E8618 /* ExtensionTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTextField.swift; sourceTree = "<group>"; };
 		BF94B88427EFCBC8007E8618 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		BF94B88627EFCFB1007E8618 /* RegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
+		BF99A00028EA24B900F9FAF8 /* MyCarListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarListViewController.swift; sourceTree = "<group>"; };
 		BFB6E2F42853F7F0005BB7C0 /* SocialUsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialUsersTableViewCell.swift; sourceTree = "<group>"; };
 		BFB6E2F52853F7F0005BB7C0 /* SocialUsersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SocialUsersTableViewCell.xib; sourceTree = "<group>"; };
 		BFB6E2F82853F805005BB7C0 /* ExtensionUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUITableViewCell.swift; sourceTree = "<group>"; };
 		BFB6E2FA28540334005BB7C0 /* SocialUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialUsersViewController.swift; sourceTree = "<group>"; };
+		BFD1D10428F2E4AE00F46033 /* AddCarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCarViewController.swift; sourceTree = "<group>"; };
+		BFD1D10528F2E4AE00F46033 /* AddCarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCarViewController.xib; sourceTree = "<group>"; };
 		BFF326AE27FA44D90011659B /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		BFFDAA6D285F87F400D483E5 /* CustomTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabbarController.swift; sourceTree = "<group>"; };
 		BFFFAB7E2861D4A100557D00 /* PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibrary.swift; sourceTree = "<group>"; };
@@ -178,6 +184,9 @@
 				BFB6E2FA28540334005BB7C0 /* SocialUsersViewController.swift */,
 				BF879AE628554EC2008F24E0 /* ProfileCarViewController.swift */,
 				BFFDAA6D285F87F400D483E5 /* CustomTabbarController.swift */,
+				BF99A00028EA24B900F9FAF8 /* MyCarListViewController.swift */,
+				BFD1D10428F2E4AE00F46033 /* AddCarViewController.swift */,
+				BFD1D10528F2E4AE00F46033 /* AddCarViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -420,6 +429,7 @@
 				BF12954227DD158500B1C255 /* speedmeter.json in Resources */,
 				BF12955527DD6D9700B1C255 /* RegisterViewController.xib in Resources */,
 				BF648FE025A2482E00A507F4 /* LaunchScreen.storyboard in Resources */,
+				BFD1D10728F2E4AE00F46033 /* AddCarViewController.xib in Resources */,
 				BF84B3E4285D24C800CAD364 /* carOnlineDatabase.sqli in Resources */,
 				BF879AF52855D92F008F24E0 /* carLoad.json in Resources */,
 				BF879AEB2855621A008F24E0 /* IndicatorView.xib in Resources */,
@@ -515,9 +525,11 @@
 				BFB6E2F92853F805005BB7C0 /* ExtensionUITableViewCell.swift in Sources */,
 				BF44F6CD285A84B300BC2AA4 /* ExtensionUIApplication.swift in Sources */,
 				BF238BD127DE241D00134184 /* DBConnection.swift in Sources */,
+				BF99A00128EA24B900F9FAF8 /* MyCarListViewController.swift in Sources */,
 				BF94B88727EFCFB1007E8618 /* RegisterModel.swift in Sources */,
 				BFF326AF27FA44D90011659B /* Defaults.swift in Sources */,
 				BF238BD727DE3BD400134184 /* ExtensionUIButton.swift in Sources */,
+				BFD1D10628F2E4AE00F46033 /* AddCarViewController.swift in Sources */,
 				BF238BDA27DE3CD700134184 /* ImageViewPicker.swift in Sources */,
 				BF0A1B6B285927B900EE73DA /* ExtensionViewController.swift in Sources */,
 				BF12953A27DD051F00B1C255 /* RouteViewController.swift in Sources */,
@@ -709,7 +721,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.akif.dmrzn.rollTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -733,7 +745,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.akif.dmrzn.rollTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

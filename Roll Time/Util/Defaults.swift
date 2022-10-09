@@ -16,6 +16,8 @@ public class Defaults{
         case UserId
         case TappedAnyButtonLocation
         case AllowedCameraAccess
+        case SaveChoosenCarId
+        case LaunchAppCount
     }
     
    public init(){}
@@ -119,6 +121,36 @@ public class Defaults{
         let data:Double = preferences.value(forKey: getIdentifier(type: .TopSpeed)) as! Double
         return data
     }
+
+    public func saveChoosenCarId(data:String){
+        let preferences = UserDefaults.standard
+        preferences.set( data , forKey:getIdentifier(type: .SaveChoosenCarId))
+        preferences.synchronize()
+    }
+    
+    public func getChoosenCarId() -> String! {
+        let preferences = UserDefaults.standard
+        if preferences.object(forKey: getIdentifier(type: .SaveChoosenCarId)) == nil {
+            return ""
+        }
+        let data:String = preferences.value(forKey: getIdentifier(type: .SaveChoosenCarId)) as! String
+        return data
+    }
+    
+    public func saveLaunchCount(data:Int){
+        let preferences = UserDefaults.standard
+        preferences.set( data , forKey:getIdentifier(type: .LaunchAppCount))
+        preferences.synchronize()
+    }
+    
+    public func getLaunchCount() -> Int! {
+        let preferences = UserDefaults.standard
+        if preferences.object(forKey: getIdentifier(type: .LaunchAppCount)) == nil {
+            return 0
+        }
+        let data:Int = preferences.value(forKey: getIdentifier(type: .LaunchAppCount)) as! Int
+        return data
+    }
     
     public func saveAllowedCamera(data:Bool){
         let preferences = UserDefaults.standard
@@ -151,6 +183,10 @@ public class Defaults{
             return "TappedAnyButtonLocation"
         case .AllowedCameraAccess:
             return "AllowedCameraAccess"
+        case .SaveChoosenCarId:
+            return "SaveChoosenCarId"
+        case .LaunchAppCount:
+            return "LaunchAppCount"
         }
     }
 }

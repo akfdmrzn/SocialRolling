@@ -46,10 +46,15 @@ class CustomTabbarController: UITabBarController {
             viewControllers.append(socialNavigationVC)
         }
         
-        let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileCarViewController")
-        let myTripsNavigationVC = createNavigationcontroller(viewController: profileViewController, image: UIImage.init(named: "maintenanceblack")! , selected: UIImage.init(named: "maintenance")!)
+//        let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileCarViewController")
+//        let myTripsNavigationVC = createNavigationcontroller(viewController: profileViewController, image: UIImage.init(named: "maintenanceblack")! , selected: UIImage.init(named: "maintenance")!)
+//        viewControllers.append(myTripsNavigationVC)
+//                setViewControllers(viewControllers, animated: true)
+        
+        let myCarListViewController = storyBoard.instantiateViewController(withIdentifier: "MyCarListViewController")
+        let myTripsNavigationVC = createNavigationcontroller(viewController: myCarListViewController, image: UIImage.init(named: "maintenanceblack")! , selected: UIImage.init(named: "maintenance")!)
         viewControllers.append(myTripsNavigationVC)
-                setViewControllers(viewControllers, animated: true)
+        setViewControllers(viewControllers, animated: true)
         
     }
     

@@ -23,10 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        Defaults().saveLaunchCount(data: Defaults().getLaunchCount() + 1)
         IQKeyboardManager.shared.enable = true
         FirebaseApp.configure()
         AppDelegate.window = UIWindow(frame: UIScreen.main.bounds)
-        if Defaults().getUserName().isEmpty { //Login olmayan
+        if Defaults().getChoosenCarId().isEmpty { //Login olmayan
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "MainLaunchNavigationController")
             AppDelegate.window?.rootViewController = vc
