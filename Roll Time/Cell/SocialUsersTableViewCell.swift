@@ -8,6 +8,7 @@
 import UIKit
 import SDWebImage
 
+
 class SocialUsersTableViewCell: UITableViewCell {
 
     @IBOutlet weak var viewContainer: UIView!
@@ -29,7 +30,9 @@ class SocialUsersTableViewCell: UITableViewCell {
     func setData(model : MyCarModel,row : Int,selectedIndex : Int,isYourProfileListCar: Bool){
         self.imageViewCar.sd_setImage(with: URL.init(string: model.carImageString), placeholderImage: nil, options: .refreshCached, progress: nil, completed: nil)
         self.labelCar.text = "\(model.carBrand) - \(model.carModel)"
-        self.labelUsername.text = "Akif"
+        FirebaseManager.shared.getUserNameWithUserId(userId: model.userdocumentId) { userName in
+            self.labelUsername.text = userName
+        }
         self.labelOrder.text = "\(model.order)"
         if selectedIndex == 0 {
             self.labelTimeTitle.text = "Seconds"

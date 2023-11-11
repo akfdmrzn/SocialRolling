@@ -387,6 +387,23 @@ public class FirebaseManager{
         }
     }
     
+    func getUserNameWithUserId(userId : String,completionBlock:((String) -> Void)?) {
+        db.collection("users").getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                    completionBlock!("")
+                } else {
+                    for document in querySnapshot!.documents {
+                        if document.documentID.elementsEqual(userId){
+                            let username = document["username"] as? String ?? ""
+                            completionBlock!(username)
+                            break
+                        }
+                    }
+                }
+        }
+    }
+    
 }
 
 
